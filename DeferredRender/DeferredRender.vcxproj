@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>DeferredRender</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{337992BE-F1CB-4105-A595-83E0D6FA6428}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\vulkan_book.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\vulkan_book.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <GlfwLinkage>
+    </GlfwLinkage>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <GlfwLinkage>
+    </GlfwLinkage>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\Camera.h" />
+    <ClInclude Include="..\common\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="..\common\imgui\backends\imgui_impl_vulkan.h" />
+    <ClInclude Include="..\common\imgui\examples\imgui_impl_glfw.h" />
+    <ClInclude Include="..\common\imgui\examples\imgui_impl_vulkan.h" />
+    <ClInclude Include="..\common\imgui\imconfig.h" />
+    <ClInclude Include="..\common\imgui\imgui.h" />
+    <ClInclude Include="..\common\imgui\imgui_internal.h" />
+    <ClInclude Include="..\common\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\common\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\common\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\common\Swapchain.h" />
+    <ClInclude Include="..\common\VulkanAppBase.h" />
+    <ClInclude Include="..\common\VulkanBookUtil.h" />
+    <ClInclude Include="DeferredRenderApp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common\Camera.cpp" />
+    <ClCompile Include="..\common\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\common\imgui\backends\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="..\common\imgui\imgui.cpp" />
+    <ClCompile Include="..\common\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\common\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\common\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\common\Swapchain.cpp" />
+    <ClCompile Include="..\common\VulkanAppBase.cpp" />
+    <ClCompile Include="DeferredRenderApp.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <CustomBuild Include="Shader\gbufferFS.frag">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S frag %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Fragment Shader</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S frag %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Fragment Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="Shader\depthPrepassVS.vert">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S vert %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Vertex Shader</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S vert %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Vertex Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+    </CustomBuild>
+    <None Include="Shader\SceneParameter.glsl" />
+    <CustomBuild Include="Shader\depthPrepassFS.frag">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -S frag %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Fragment Shader</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -S frag %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Fragment Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="Shader\deferredLightingVS.vert">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S vert %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Vertex Shader</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S vert %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Vertex Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="Shader\deferredLightingFS.frag">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S frag %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Fragment Shader</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S frag %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Fragment Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+    <CustomBuild Include="Shader\gbufferVS.vert">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S vert %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compile Vertex Shader</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VK_SDK_PATH)\Bin\glslangValidator.exe -V -I. -S vert %(Identity) -o "$(ProjectDir)assets\shader\%(FileName).spv"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compile Vertex Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)assets\shader\%(FileName).spv</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\glm.0.9.9.500\build\native\glm.targets" Condition="Exists('packages\glm.0.9.9.500\build\native\glm.targets')" />
+    <Import Project="packages\glfw.3.3.0.1\build\native\glfw.targets" Condition="Exists('packages\glfw.3.3.0.1\build\native\glfw.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\glm.0.9.9.500\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\glm.0.9.9.500\build\native\glm.targets'))" />
+    <Error Condition="!Exists('packages\glfw.3.3.0.1\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\glfw.3.3.0.1\build\native\glfw.targets'))" />
+  </Target>
+</Project>

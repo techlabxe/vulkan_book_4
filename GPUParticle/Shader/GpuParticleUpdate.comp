@@ -1,0 +1,81 @@
+#version 450
+#extension GL_GOOGLE_include_directive : enable
+#include "Shader/SceneParameter.glsl"
+#include "Shader/GpuParticleData.glsl"
+
+// 自由度を高めにするために GPUParticleData に変数を多めに取っています(本サンプルでは未使用ですが).
+
+
+float nextRand(inout uint s)
+{
+  s = s ^ (s << 13);
+  s = s ^ (s >> 17);
+  s = s ^ (s << 5);
+  return clamp(float(s) * 2.3283064e-10, 0, 1);
+}
+
+
+layout(local_size_x=32,local_size_y=1,local_size_z=1) in;
+void main()
+{
+  uint index = gl_GlobalInvocationID.x;
+  if( index >= maxParticleCount)
+  {
+    return;
+  }  
+  if( gpuParticleElements[index].isActive == 0)
+  {
+    return;
+  }
+
+  uint seed = index + gl_GlobalInvocationID.x * 1235;
+  seed += frameCountLow;
+
+  float dt = frameDeltaTime;
+  gpuParticleElements[index].lifeTime = gpuParticleElements[index].lifeTime - dt;
+  gpuParticleElements[index].elapsed += dt;
+
+  if( gpuParticleElements[index].lifeTime < gpuParticleElements[index].elapsed ) {
+    gpuParticleElements[index].isActive = 0;
+    uint storeIndex = atomicAdd(headIndex, 1);
+    indices[storeIndex] = index;
+    return;
+  }
+
+  // 生き残っているパーティクルを動かす.
+  vec3 position = gpuParticleElements[index].position.xyz;
+  vec3 velocity = gpuParticleElements[index].velocity.xyz;
+
+  vec3 gravity = vec3(0, -98, 0);
+  position += velocity * dt;
+  if( position.y > 0.001 ) {
+    velocity += gravity * dt;
+  }
+
+  if( position.y < 0) {
+    velocity.y *= -1;
+    velocity *= 0.5 + nextRand(seed) * 0.15;
+    position.y = 0;
+  }
+
+  // フォースの処理.
+  vec3 center = forceCenter1.xyz;
+  float radius = forceCenter1.w;
+  vec3 toCenter = center - position.xyz;
+  float L = length(toCenter);
+  if( L < radius ) {
+    float velocityLen = length(velocity);
+    velocity = reflect(normalize(velocity), -normalize(toCenter));
+    velocity *= velocityLen;
+    position = radius * -normalize(toCenter) + center;
+
+    if(drawFlag == 1) {
+    //gpuParticleElements[index].colorIndex= 3;
+      velocity.xyz = vec3(0);
+    }
+  }
+
+  gpuParticleElements[index].position.xyz = position;
+  gpuParticleElements[index].velocity.xyz = velocity;
+
+}

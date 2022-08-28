@@ -1,0 +1,55 @@
+#version 450
+#extension GL_GOOGLE_include_directive : enable
+#include "Shader/SceneParameter.glsl"
+#include "Shader/GpuParticleData.glsl"
+
+float nextRand(inout uint s)
+{
+  s = s ^ (s << 13);
+  s = s ^ (s >> 17);
+  s = s ^ (s << 5);
+  return clamp(float(s) * 2.3283064e-10, 0, 1);
+}
+
+layout(local_size_x=32,local_size_y=1,local_size_z=1) in;
+void main()
+{
+  int listIndex = int(atomicAdd(headIndex, -1));
+  if( listIndex <= 0) {
+    // マイナスにしてしまった分を戻す.
+    atomicAdd(headIndex, 1);
+    return;
+  }
+  uint particleDataIndex = indices[listIndex-1];
+
+  if(gpuParticleElements[particleDataIndex].isActive > 0 ) {
+    return;
+  }
+
+  uint seed = listIndex + gl_GlobalInvocationID.x * 1235;
+  seed += frameCountLow;
+
+  GpuParticleElement data;
+  data.isActive = 1;
+  data.velocity = vec4(0);
+  data.position = vec4(0);
+  data.elapsed = 0;
+
+  vec3 position, velocity;
+  position.x = (nextRand(seed) - 0.5);
+  position.z = (nextRand(seed) - 0.5);
+  position.y = 10 + nextRand(seed);
+
+  float r = clamp(nextRand(seed) *5, 0.2, 5);
+  float theta = nextRand(seed) * 3.14192 * 2.0;
+  velocity.x = r * cos(theta);
+  velocity.z = r * sin(theta);
+  velocity.y = 10 + nextRand(seed) * 5;
+  velocity *= 8;
+
+  data.position.xyz = position;
+  data.velocity.xyz = velocity;
+  data.lifeTime= 5 + nextRand(seed)*5;
+  data.colorIndex = uint(nextRand(seed) * 8);
+  gpuParticleElements[particleDataIndex] = data;
+}
